@@ -1,0 +1,64 @@
+{% extends "template.html" %}
+
+{% block body %}
+
+<div id="Home Button">
+    <a href="{{url_for('index')}}"><img src="../static/images/home.webp" height="100px" widht="100px"></a>
+</div>
+
+{{team_dict}}
+
+<header>
+    <h2 id="team_info">{{ team_dict["nickname"] }} - {{team_dict["TeamNum"]}}</h2>
+</header>
+
+
+
+<div id="information">
+MATCHES PLAYED - {{team_dict["averages"]["matches"]}}<br>
+AVERAGE SCORED - {{ team_dict["averages"]["scored"]}}<br>
+AVERAGE ALLOWED - {{team_dict["averages"]["allowed"]}}<br>
+WIN PERCENTAGE - {{team_dict["averages"]["win-loss"]*100}}% <br>
+AVERAGE RANKING POINTS - {{team_dict["averages"]["rp"]}} <br>
+AVERAGE FOUL POINTS - {{team_dict["averages"]["foul_points"]}}<br>
+</div>
+<br><br>
+<div id="auto">
+MOBILITY PERCENTAGE - {{team_dict["averages"]["mobility"]*100}}%<br>
+AUTONOMOUS DOCKED PERCENTAGE - {{team_dict["averages"]["auto_charge"]*100}}%<br>
+AVERAGE AUTONOMOUS GAME POINTS - {{team_dict["averages"]["auto_gp"]}}<br>
+AUTONOMOUS LEVEL BRIDGE STATE PERCENTAGE - {{team_dict["averages"]["auto_bs"]*100}}%<br>
+AVERAGE AUTONOMOUS POINTS - {{team_dict["averages"]["auto_pts"]}}
+</div>
+<br>
+<div id="teleop">
+AVERAGE LINK POINTS - {{team_dict["averages"]["link_pts"]}}<br>
+AVERAGE TELEOP POINTS - {{team_dict["averages"]["teleop_pts"]}}<br>
+AVERAGE TELEOP GAME POINTS - {{team_dict["averages"]["teleop_gp"]}}<br>
+END GAME DOCKED PERCENTAGE - {{team_dict["averages"]["endgame_charge"]*100}}%<br>
+END GAME LEVEL BRIDGE STATE PERCENTAGE - {{team_dict["averages"]["endgame_bs"]*100}}%<br>
+</div>
+
+<details>
+<summary>2023</summary>
+{% for event in team_dict["events"]%}
+<details>
+    <summary>{{team_dict["events"][event]["name"]}}</summary>
+    {% for match in team_dict["events"][event]["matches"] %}
+    <a href="{{ url_for('match', match_id=match['key'])}}">{{match["key"]}} -
+    </a><br>
+    {{match["alliances"]["red"]["score"]}}
+    {%for team in match["alliances"]["red"]["team_keys"]%}
+    <a href="{{ url_for('team_page', team_num=team.split('frc')[1]) }}">{{team.split("frc")[1]}}</a>
+    {%endfor%}
+    {{match["alliances"]["blue"]["score"]}}
+    {%for team in match["alliances"]["blue"]["team_keys"]%}
+    <a href="{{ url_for('team_page', team_num=team.split('frc')[1]) }}">{{team.split("frc")[1]}}</a>
+    {%endfor%}
+    <br>
+    {%endfor%}
+</details>
+{%endfor%}
+</details>
+
+{% endblock %}

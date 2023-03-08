@@ -1,0 +1,55 @@
+{% extends "template.html" %}
+
+{% block body %}
+
+<div id="Home Button">
+    <a href="{{url_for('index')}}"><img src="../static/images/home.webp" height="100px" widht="100px"></a>
+</div>
+
+{{ match_data }}
+
+<header>
+    <h1>{{match_data["event_key"]}}: Match Number #{{match_data["match_number"]}}</h1>
+    {% if (match_data["videos"] != []) %}
+        <a href="https://www.youtube.com/watch?v={{match_data['videos'][0]['key']}}">VIDEO LINK</a>
+    {% endif %}
+</header>
+
+<div class = "container">
+<div id="red">
+<h1>Red Alliance - {{match_data["alliances"]["red"]["score"]}}</h1>
+{% for team in match_data["alliances"]["red"]["team_keys"] %}
+    <h2><a href="{{ url_for('team_page', team_num=team.split('frc')[1]) }}">{{team.split("frc")[1]}}</a></h2>
+{% endfor %}
+</div>
+
+{% if match_data["score_breakdown"] != None %}
+
+<div id="scoring-breakdown-red">
+    {% for key in match_data["score_breakdown"]["red"].keys() %}
+        {{match_data["score_breakdown"]["red"][key]}}<br>
+    {% endfor %}
+</div>
+
+<div id="scoring-breakdown-categories">
+    {% for key in match_data["score_breakdown"]["red"].keys() %}
+        {{key}}<br>
+    {% endfor %}
+</div>
+
+<div id="scoring-breakdown-blue">
+    {% for key in match_data["score_breakdown"]["blue"].keys() %}
+        {{match_data["score_breakdown"]["blue"][key]}}<br>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+<div id="blue">
+    <h1>{{match_data["alliances"]["blue"]["score"]}} - Blue Alliance</h1>
+    {% for team in match_data["alliances"]["blue"]["team_keys"] %}
+        <h2><a href="{{ url_for('team_page', team_num=team.split('frc')[1]) }}">{{team.split("frc")[1]}}</a></h2>
+    {% endfor %}
+</div>
+
+{% endblock %}

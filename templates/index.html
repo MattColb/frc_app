@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+
+{% block body %}
+
+<header>
+    <h1>5041 Scouting Application</h1>
+</header>
+
+<form action="team_page" method="POST">
+    <input name="team_number" type="text" placeholder="Team Number">
+    <button type="submit">submit</button>
+</form>
+
+{% endblock %}
