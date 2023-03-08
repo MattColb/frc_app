@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import requests
 
 # VVV PUT YOUR API KEY HERE VVVV
-Auth_Key_TBA = "2BwMbds992jtroDHCsZbGKVnJBC3Z9UvAxXivj7CnMpGCVzvxNPCEattPlvSyIG7"
+Auth_Key_TBA = ""
 
 app = Flask("__name__")
 
